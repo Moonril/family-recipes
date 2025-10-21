@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "image": "foto.jpg",
+    "title": "Ribollita",
+    "ingredients": ["pasta fresca", "ragù", "besciamella"],
+    "description": "Cuoci le sfoglie, prepara il ragù..."
+  },
+  {
+    "id": 2,
+    "image": "foto.jpg",
+    "title": "Tiramisù",
+    "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
+    "description": "Monta le uova, aggiungi mascarpone..."
+  }
+]
