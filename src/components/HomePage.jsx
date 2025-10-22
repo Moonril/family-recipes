@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
-import NavBar from "./NavBar"
 import RecipeCard from "./RecipeCard"
+import { useParams } from "react-router-dom"
 
 const HomePage = function () {
 
     const [recipes, setRecipes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
+
 
     const getRecipes = () => {
         fetch('ricette.json')

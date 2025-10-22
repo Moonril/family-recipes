@@ -1,12 +1,78 @@
+import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+
 const RecipePage = function () {
+    
+    const { id } = useParams()
+    const [recipe, setRecipe] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isError, setIsError] = useState(false)
+    
+    
+
+    useEffect(()=>{
+        fetch("/ricette.json")
+        .then((response)=>{
+            if(response.ok){
+                return response.json()
+            } else {
+                throw new Error('errrore nella fetch')
+            }
+        })
+        .then(data => {
+
+            setIsLoading(false)
+            const found = data.find(r => r.id === Number(id))
+            setRecipe(found)
+
+            console.log('porcocaneee', data)
+            console.log('porcocaneee2', found)
+            console.log('porcocaneee3', id)
+        })
+        .catch((error) => {
+            console.log('errore', error)
+            setIsLoading(false)
+            setIsError(true)
+        })
+    }, [id])
+
+    
+    
+
     return (
         <section className="bg-red-200 min-h-screen flex flex-row p-20 gap-5">
-            <img src="stock-recipe.jpg" alt="stock-recipe" className="w-md" />
-            <div className="flex flex-col gap-3">
-                <h1 className="text-3xl font-bold">Titolo</h1>
-                <h4 className="text-xl">ingredienti</h4>
-                <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet tempora quibusdam ullam, incidunt delectus praesentium corporis ea modi, minus tempore perferendis quas aliquid sit. Velit sapiente rerum quaerat harum dolorum?</p>
-            </div>
+            <Link to={'/'}>Indietro</Link>
+            {
+                    isLoading === true && (
+                        <div className="text-center">
+                            <p>Loading...</p>
+                        </div>
+                    )
+                }
+
+                {/* ERROR */}
+                {
+                    isError && (
+                        <p>
+                            Errore nella fetch
+                        </p>
+                    )
+                }
+
+                {
+                    !isLoading && !isError &&  recipe && (
+                        <div className="flex flex-row gap-5">
+                            <img src={`/${recipe.image}`} alt="stock-recipe" className="w-md" />
+
+                            <div className="flex flex-col gap-3">
+                                <h1 className="text-3xl font-bold">{recipe.title}</h1>
+                                <h4 className="text-xl">{recipe.ingredients.join(', ')}</h4>
+                                <p className="text-xl">{recipe.description}</p>
+                            </div>
+                        </div>
+                        
+                    )
+                }
         </section>
     )
 }
