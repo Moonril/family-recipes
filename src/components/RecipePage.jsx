@@ -7,6 +7,7 @@ const RecipePage = function () {
     const [recipe, setRecipe] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
+
     
     
 
@@ -40,8 +41,8 @@ const RecipePage = function () {
     
 
     return (
-        <section className="bg-red-200 min-h-screen flex flex-row p-20 gap-5">
-            <Link to={'/'}>Indietro</Link>
+        <section className="bg-red-200 min-h-screen flex flex-col md:flex-row p-10 lg:p-20 gap-5">
+            <Link to={'/'} className="text-2xl text-gray-900">&larr; Indietro</Link>
             {
                     isLoading === true && (
                         <div className="text-center">
@@ -61,8 +62,8 @@ const RecipePage = function () {
 
                 {
                     !isLoading && !isError &&  recipe && (
-                        <div className="flex flex-row gap-5">
-                            <img src={`/${recipe.image}`} alt="stock-recipe" className="w-md" />
+                        <div className="flex flex-col lg:flex-row gap-5">
+                            <img src={`/${recipe.image}`} alt="stock-recipe" className="w-xs lg:w-md" />
 
                             <div className="flex flex-col gap-3">
                                 <h1 className="text-3xl font-bold">{recipe.title}</h1>

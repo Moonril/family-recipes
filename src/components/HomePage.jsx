@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import RecipeCard from "./RecipeCard"
-import { useParams } from "react-router-dom"
 
 const HomePage = function () {
 
     const [recipes, setRecipes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
+    const [search, setSearch] = useState('')
 
 
     const getRecipes = () => {
@@ -19,8 +19,8 @@ const HomePage = function () {
             }
         })
         .then(data => {
-            setRecipes(data)
             setIsLoading(false)
+            setRecipes(data)
             console.log(data)
         })
         .catch((error) => {
@@ -30,22 +30,40 @@ const HomePage = function () {
         })
     }
 
+    const handleSearch = (e) => {
+        e.preventDefault()
+        if (search.trim() === "") {
+            getRecipes()
+        } else {
+            const filtered = recipes.filter((recipe) =>
+            recipe.title.toLowerCase().includes(search.toLowerCase()) || 
+            recipe.ingredients.some((ing) =>
+                ing.toLowerCase().includes(search.toLowerCase())
+            )
+        )
+        setRecipes(filtered)
+        }
+    }
+
     useEffect(()=>{
         getRecipes()
     }, [])
 
     return (
-        <section className="bg-red-200 min-h-screen flex flex-col px-10 items-center justify-center">
-            {/* header */}
-            {/* <NavBar /> */}
+        <section className="bg-red-200 min-h-screen flex flex-col p-10 items-center justify-center">
+
             {/* search */}
-            <form action="submit" className="my-10 flex gap-4 text-xl md:text-2xl">
-                <input type="text" className="bg-white rounded-md p-2" />
-                <button className="bg-amber-100 rounded-2xl py-1 px-4">Cerca</button>
+            <form className="my-10 flex gap-4 text-xl md:text-2xl" onSubmit={handleSearch}>
+                <input type="text" className="bg-white rounded-md p-2" placeholder={`Cerca per nome`} value={search} onChange={(e) => {
+                    setSearch(e.target.value)
+                }} />
+                <button className="bg-amber-100 rounded-2xl py-1 px-4" type="submit">Cerca</button>
             </form>
             {/* cards */}
             
             <div className="flex flex-col md:flex-row gap-5">
+                {/* LOADING */}
+
                 {
                     isLoading === true && (
                         <div className="text-center">
