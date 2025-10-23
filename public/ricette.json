@@ -8,8 +8,50 @@
   },
   {
     "id": 2,
-    "image": "tiramisu2.jpg",
+    "image": "tiramisu.jpg",
     "title": "Tiramisù",
+    "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
+    "description": "Monta le uova, aggiungi mascarpone..."
+  },
+  {
+    "id": 3,
+    "image": "lesso.jpg",
+    "title": "Lesso",
+    "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
+    "description": "Monta le uova, aggiungi mascarpone..."
+  },
+  {
+    "id": 4,
+    "image": "spezzatino.jpg",
+    "title": "Spezzatino di lesso",
+    "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
+    "description": "Monta le uova, aggiungi mascarpone..."
+  },
+  {
+    "id": 5,
+    "image": "polpette-lesso.jpg",
+    "title": "Polpette di lesso",
+    "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
+    "description": "Monta le uova, aggiungi mascarpone..."
+  },
+  {
+    "id": 6,
+    "image": "pappa.webp",
+    "title": "Pappa al pomodoro",
+    "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
+    "description": "Monta le uova, aggiungi mascarpone..."
+  },
+  {
+    "id": 7,
+    "image": "taralli.jpg",
+    "title": "Taralli",
+    "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
+    "description": "Monta le uova, aggiungi mascarpone..."
+  },
+  {
+    "id": 8,
+    "image": "orecchiette.jpg",
+    "title": "Orecchiette",
     "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
     "description": "Monta le uova, aggiungi mascarpone..."
   }
