@@ -42,7 +42,7 @@ const RecipePage = function () {
 
     return (
         <section className="bg-red-200 min-h-screen flex flex-col md:flex-row p-10 lg:p-20 gap-5">
-            <Link to={'/'} className="text-2xl text-gray-900 hover:text-red-500 hover:underline">&larr; Indietro</Link>
+            <Link to={'/'} className="text-2xl text-gray-900">&larr; <span className="hover:text-red-500 hover:underline">Indietro</span></Link>
             {
                     isLoading === true && (
                         <div className="text-center">
@@ -62,13 +62,14 @@ const RecipePage = function () {
 
                 {
                     !isLoading && !isError &&  recipe && (
-                        <div className="flex flex-col lg:flex-row gap-5">
-                            <img src={`/${recipe.image}`} alt="stock-recipe" className="w-full h-[200px] md:h-[300px] lg:w-md lg:h-full object-cover" />
+                        <div className="flex flex-col xl:flex-row gap-5">
+                            <img src={`/${recipe.image}`} alt="stock-recipe" className="w-full h-[200px] md:h-[300px] xl:w-md xl:h-full object-cover" />
 
                             <div className="flex flex-col gap-3">
                                 <h1 className="text-3xl font-bold">{recipe.title}</h1>
-                                <h4 className="text-xl">{recipe.ingredients.join(', ')}</h4>
-                                <p className="text-xl">{recipe.description}</p>
+                                <h4 className="text-xl">Ingredienti:</h4>
+                                <h4 className="text-xl xl:w-xl">{recipe.ingredients.join(', ')}.</h4>
+                                <p className="text-justify text-xl xl:w-xl mt-6">{recipe.description}</p>
                             </div>
                         </div>
                         
