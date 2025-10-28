@@ -53,7 +53,7 @@ const HomePage = function () {
         <section className="bg-red-200 min-h-screen flex flex-col p-5 items-center justify-center">
 
             {/* search */}
-            <form className="my-10 flex gap-4 text-xl md:text-2xl" onSubmit={handleSearch}>
+            <form className="my-10 flex gap-4 text-md xs:text-lg md:text-2xl" onSubmit={handleSearch}>
                 <input type="text" className="bg-white rounded-md p-2 placeholder-gray-500" placeholder={`cerca..`} value={search} onChange={(e) => {
                     setSearch(e.target.value)
                 }} />
