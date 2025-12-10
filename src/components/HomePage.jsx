@@ -19,9 +19,10 @@ const HomePage = function () {
             }
         })
         .then(data => {
+            const sorted = [...data].sort((a,b) => a.title.localeCompare(b.title))
+            setRecipes(sorted)
             setIsLoading(false)
-            setRecipes(data)
-            console.log(data)
+            //console.log(data)
         })
         .catch((error) => {
             console.log('errore', error)
