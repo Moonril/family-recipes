@@ -46,20 +46,34 @@ const HomePage = function () {
         }
     }
 
+    const filterByType = (type) => {
+        
+        const filteredByType = recipes.filter(recipe=>recipe.type === type)
+        setRecipes(filteredByType)
+        
+    }
+
     useEffect(()=>{
         getRecipes()
     }, [])
 
     return (
-        <section className="bg-red-200 min-h-screen flex flex-col p-5 items-center justify-center">
+        <section className="bg-[#253A4A] min-h-screen flex flex-col p-5 items-center justify-center">
 
             {/* search */}
             <form className="my-10 flex gap-4 text-md xs:text-lg md:text-2xl" onSubmit={handleSearch}>
                 <input type="text" className="bg-white rounded-md p-2 placeholder-gray-500" placeholder={`cerca..`} value={search} onChange={(e) => {
                     setSearch(e.target.value)
                 }} />
-                <button className="bg-amber-100 rounded-2xl py-1 px-4 hover:bg-amber-300" type="submit">Cerca</button>
+                <button className="bg-[#E0A840] rounded-2xl py-1 px-4 hover:bg-amber-300 cursor-pointer" type="submit">Cerca</button>
             </form>
+            {/* tags */}
+            <div className="flex flex-wrap items-center gap-5 mb-10">
+                <button className=" bg-[#CDC6B6] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('primo')}>Primi</button>
+                <button className=" bg-[#CDC6B6] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('secondo')}>Secondi</button>
+                <button className=" bg-[#CDC6B6] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('contorno')}>Contorni</button>
+                <button className=" bg-[#CDC6B6] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('dolce')}>Dolci</button>
+            </div>
             {/* cards */}
             
             <div className="flex flex-col md:flex-row md:flex-wrap items-center gap-5">

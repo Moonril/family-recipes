@@ -3,6 +3,7 @@
     "id": 1,
     "image": "ribollita.webp",
     "title": "Ribollita",
+    "type": "primo",
     "ingredients": ["4 carote", "2 patate grandi", "sedano", "aglio", "cipolla", "2 rametti di rosmarino", "salsa di pomodoro", "1 verza piccola", "mazzo di cavolo nero", "1kg di fagioli cotti", "400g pane"],
     "description": "Soffriggere 1 carota, la cipolla, sedano, aglio, rosmarino e prezzemolo con olio. Aggiungere la salsa di pomodoro e il sale, quando il pomodoro bolle e il sale si è sciolto aggiungere le verdure a foglia (la verza tagliata fine senza le coste e il cavolo nero senza i gambi), coprire e far cuocere un po'.  Quando le verdure si sono ammorbidite aggiungere il resto delle carote, sedano, patate a pezzi. Mescolare bene, aggiungere i fagioli (1/3 interi e il resto passati). Bollire per 5 minuti e poi aggiungere 1 litro d'acqua e far cuocere. Quando le verdure sono cotte, spegnere e tagliare il pane a fette. In un'altra pentola fare uno strato di pomodoro sul fondo, uno strato di pane e uno strato di zuppa, continuare a strati fino a finire le verdure. Lasciar riposare coperto ALMENO 3 ore. Prima di servire, cuocere nuovamente mescolando continuamente per far insaporire il pane, regolare di sale."
   },
@@ -10,6 +11,7 @@
     "id": 2,
     "image": "tiramisu.jpg",
     "title": "Tiramisù",
+    "type": "dolce",
     "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
     "description": "Monta le uova, aggiungi mascarpone..."
   },
@@ -17,13 +19,15 @@
     "id": 3,
     "image": "lesso.jpg",
     "title": "Lesso",
-    "ingredients": ["carote", "aglio", "cipolla", "patate", "pomodorino", "prezzemolo", "sale", "ginocchio", "spezzatino", "zampa"],
+    "type": "primo",
+    "ingredients": ["carote", "aglio", "cipolla", "patate", "pomodorino", "prezzemolo", "sale", "finocchio", "spezzatino", "zampa"],
     "description": "Unire tutti gli ingredienti a freddo in pentola, portare a ebollizione, lasciar cuore a fiamma bassa con coperchio per almeno 3 ore."
   },
   {
     "id": 4,
     "image": "spezzatino.jpg",
     "title": "Spezzatino di lesso",
+    "type": "secondo",
     "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
     "description": "Monta le uova, aggiungi mascarpone..."
   },
@@ -31,6 +35,7 @@
     "id": 5,
     "image": "polpette-lesso.jpg",
     "title": "Polpette di lesso",
+    "type": "secondo",
     "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
     "description": "Monta le uova, aggiungi mascarpone..."
   },
@@ -38,6 +43,7 @@
     "id": 6,
     "image": "pappa.webp",
     "title": "Pappa al pomodoro",
+    "type": "primo",
     "ingredients": ["uova", "mascarpone", "savoiardi", "caffè"],
     "description": "Monta le uova, aggiungi mascarpone..."
   },
@@ -45,6 +51,7 @@
     "id": 7,
     "image": "taralli.jpg",
     "title": "Taralli",
+    "type": "contorno",
     "ingredients": ["200g farina", "300g semola", "130g olio", "10g sale", "250g vino bianco", "pepe", "olive", "cipolle", "peperoncino", "semi di finocchio"],
     "description": "Unire tutti gli ingredienti in una ciotola, mescolare e impastare fino a raggiungere una consistenza liscia e elastica. Coprire e lasciar riposare 15 minuti. Formare dei serpentelli e dare la forma desiderata. Far scottare in una pentola di acqua bollente, 4-5 alla volta, assicurandosi che non si attacchino tra di loro o alla pentola. Quando salgono a galla, rimuovere e far asciugare su un canovaccio. Quando asciutti infornare a 200* per 20-30minuti, girare a metà cottura."
   },
@@ -52,6 +59,7 @@
     "id": 8,
     "image": "orecchiette.jpg",
     "title": "Orecchiette",
+    "type": "primo",
     "ingredients": ["300g acqua", "300g semola", "200g farina"],
     "description": "Impasta.."
   }
