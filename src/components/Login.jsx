@@ -24,7 +24,7 @@ const Login = function () {
             console.log("Login completed", response.data)
             const token = response.data
             localStorage.setItem("token", token)
-            login(token)
+            login(token) //cchange
             navigate("/")
             
         })
@@ -33,7 +33,7 @@ const Login = function () {
         })
     }
 
-    /* const { login } = useAuth() */
+    /* const { login } = useAuth() */ //not available
 
     return (
         <section className="bg-[#EDEEE9] min-h-screen flex flex-col p-5 items-center justify-center">
