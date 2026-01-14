@@ -1,6 +1,7 @@
 import axios from "axios"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../auth/AuthContext"
 
 const Login = function () {
 
@@ -12,6 +13,8 @@ const Login = function () {
         username: '',
         password: ''
     })
+    
+    const {login} = useContext(AuthContext)
 
     const logIn = ()=>{
         axios
@@ -21,9 +24,9 @@ const Login = function () {
                 username: '',
                 password: ''
             })
-            console.log("Login completed", response.data)
-            const token = response.data
-            localStorage.setItem("token", token)
+            //console.log("Login completed", response.data)
+            //const token = response.data
+            //localStorage.setItem("token", token)
             login(token) //cchange
             navigate("/")
             
@@ -33,7 +36,6 @@ const Login = function () {
         })
     }
 
-    /* const { login } = useAuth() */ //not available
 
     return (
         <section className="bg-[#EDEEE9] min-h-screen flex flex-col p-5 items-center justify-center">

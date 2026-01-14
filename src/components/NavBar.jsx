@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom"
+import { AuthContext } from "../auth/AuthContext";
 
 const NavBar = function () {
 
     const location = useLocation()
+    const { isAuthenticated, username, logout } = useContext(AuthContext)
+
 
 
     return (
@@ -10,9 +14,17 @@ const NavBar = function () {
 
             <Link to={'/'} className={location.pathname === '/' ? ' font-bold text-xl underline' : ' font-bold text-xl'}>Home</Link>
             <div className="flex flex-row justify-end items-center gap-2">
-                <p>Ciao, ciccio</p> {/* todo if login or logout */}
+                <p>Ciao, {isAuthenticated ? username : 'ciccio'}</p>
 
-                <Link to={"/login"} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Login</Link> {/* todo if login or logout */}
+
+                {
+                    isAuthenticated ? (
+                        <button onClick={logout} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Logout</button>
+                        
+                    ) : ( 
+                        <Link to={"/login"} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Login</Link> 
+                    )
+                }
 
             </div>
 
