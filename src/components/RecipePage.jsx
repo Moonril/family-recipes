@@ -41,7 +41,7 @@ const RecipePage = function () {
     
 
     return (
-        <section className="bg-[#EDEEE9] min-h-screen flex flex-col md:flex-row p-5 md:p-10 lg:p-20 gap-5">
+        <section className="bg-[#EDEEE9] bg-orange-50 min-h-screen flex flex-col md:flex-row p-5 md:p-10 lg:p-20 gap-5">
             <Link to={'/'} className="text-2xl text-gray-900">&larr; <span className="hover:text-red-500 hover:underline">Indietro</span></Link>
             {
                     isLoading === true && (

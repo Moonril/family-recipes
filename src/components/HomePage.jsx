@@ -59,7 +59,7 @@ const HomePage = function () {
     }, [])
 
     return (
-        <section className="bg-[#EDEEE9] min-h-screen flex flex-col p-5 items-center justify-center">
+        <section className="bg-[#EDEEE9] bg-orange-50 min-h-screen flex flex-col p-5 items-center justify-center">
             
             
             {/* search */}

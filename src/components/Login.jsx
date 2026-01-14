@@ -27,7 +27,7 @@ const Login = function () {
             //console.log("Login completed", response.data)
             //const token = response.data
             //localStorage.setItem("token", token)
-            login(token) //cchange
+            login(response.data) 
             navigate("/")
             
         })

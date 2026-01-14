@@ -10,9 +10,16 @@ const NavBar = function () {
 
 
     return (
-        <section className="bg-[#EDEEE9] flex flex-row justify-between items-center p-4">
+        <section className="bg-[#EDEEE9] bg-orange-50 flex flex-row justify-between items-center p-4">
 
-            <Link to={'/'} className={location.pathname === '/' ? ' font-bold text-xl underline' : ' font-bold text-xl'}>Home</Link>
+            {/* <div> */}
+                <Link to={'/'} className={location.pathname === '/' ? ' font-bold text-xl underline' : ' font-bold text-xl'}>Home</Link>
+                {
+                    isAuthenticated && (
+                        <Link to={'/newRecipes'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Nuova ricetta?</Link>
+                    )
+                }
+            {/* </div> */}
             <div className="flex flex-row justify-end items-center gap-2">
                 <p>Ciao, {isAuthenticated ? username : 'ciccio'}</p>
 
