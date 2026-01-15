@@ -16,7 +16,7 @@ const NavBar = function () {
                 <Link to={'/'} className={location.pathname === '/' ? ' font-bold text-xl underline' : ' font-bold text-xl'}>Home</Link>
                 {
                     isAuthenticated && (
-                        <Link to={'/newRecipes'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Nuova ricetta?</Link>
+                        <Link to={'/recipes/new'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Nuova ricetta?</Link>
                     )
                 }
             {/* </div> */}

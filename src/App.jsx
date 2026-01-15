@@ -17,10 +17,10 @@ function App() {
       <NavBar />
       <Routes>
         <Route path='/' element={<HomePage />}  />
-        <Route path='/recipe/:id' element={<RecipePage />}  />
+        <Route path='/recipes/:id' element={<RecipePage />}  />
         <Route path='*' element={<NotFound />}  />
         <Route path='/login' element={<Login />}  />
-        <Route path='/newRecipes' element={<NewRecipes />}  />
+        <Route path='/recipes/new' element={<NewRecipes />}  />
 
       </Routes>
 
