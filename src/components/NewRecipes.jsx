@@ -1,9 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
+import Select from 'react-select'
+//import makeAnimated from 'react-select/animated'
+import CreatableSelect from 'react-select/creatable';
 
 const NewRecipes = function () {
 
-    const APIUrl = 'http://localhost:8080/recipes/new'
+    const APIUrlNew = 'http://localhost:8080/recipes/new'
 
     const [inputValues, setInputValues] = useState({}) // what
 
@@ -12,13 +15,25 @@ const NewRecipes = function () {
     // state for ingredients
     const [existingIngredients, setExistingIngredients] = useState() // what should i put in here
     // import already existing ingredients con fetch al load
-    const fetchExistingIngredients = ()=>{}
+    const fetchExistingIngredients = ()=>{
+
+    }
     // save in state
     // select reads ingredients and saves new ones
 
+    /* test select */
+    //const animatedComponents = makeAnimated();
+    
+
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' }
+    ]
+
     const newRecipe = () => {
         axios
-        .post(APIUrl, inputValues)
+        .post(APIUrlNew, inputValues)
         .then((response) => {
             setInputValues({}) //??
             console.log("Recipe saved: ", response.data)
@@ -65,6 +80,11 @@ const NewRecipes = function () {
                                 ingredients: e.target.value,
                             })
                         }} />
+
+
+                        {/* <Select  closeMenuOnSelect={false} components={animatedComponents} isMulti options={options}></Select> */}
+                        <CreatableSelect isMulti options={options} />
+
 
                     </div>
                 </div>
