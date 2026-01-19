@@ -1,41 +1,72 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Select from 'react-select'
-//import makeAnimated from 'react-select/animated'
 import CreatableSelect from 'react-select/creatable';
 
 const NewRecipes = function () {
 
-    const APIUrlNew = 'http://localhost:8080/recipes/new'
+    const APIUrlNewRecipe = 'http://localhost:8080/recipes/new'
+    const APIUrlGetIngredients = 'http://localhost:8080/ingredients'
+    
+    const token = localStorage.getItem("token")
 
-    const [inputValues, setInputValues] = useState({}) // what
+
+    const [inputValues, setInputValues] = useState({})
+
 
     /* handling ingredients */
 
     // state for ingredients
-    const [existingIngredients, setExistingIngredients] = useState() // what should i put in here
-    // import already existing ingredients con fetch al load
-    const fetchExistingIngredients = ()=>{
+    const [existingIngredients, setExistingIngredients] = useState([]) 
+    const [selectedIngredients, setSelectedIngredients] = useState([])  // to send with the new recipe
+    // import already existing ingredients con fetch al load    
 
-    }
-    // save in state
-    // select reads ingredients and saves new ones
+    /* get ingredients from database */
 
-    /* test select */
-    //const animatedComponents = makeAnimated();
-    
-
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
-
-    const newRecipe = () => {
+    const getExistingIngredients = () => {
         axios
-        .post(APIUrlNew, inputValues)
+        .get(APIUrlGetIngredients, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        })
+        .then((response) =>{
+            console.log(response.data.content, 'ingredients list')
+            const formattedIngredients = response.data.content.map(ing => ({
+                value: ing.name,
+                label: ing.name
+            }))
+            setExistingIngredients(formattedIngredients)
+           
+            
+            
+        })
+        .catch((error) => {
+            console.log("errore nel recupero ingredienti", error)
+            
+        })
+    }
+
+    
+    /* save recipe */
+    
+    const saveNewRecipe = () => {
+
+        const payload = {
+            ...inputValues,
+            ingredients: selectedIngredients.map(ing => ing.value)
+        }
+
+
+        axios
+        .post(APIUrlNewRecipe, payload, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        })
         .then((response) => {
-            setInputValues({}) //??
             console.log("Recipe saved: ", response.data)
             
         })
@@ -44,17 +75,23 @@ const NewRecipes = function () {
             
         })
     }
+    
 
+    useEffect(()=>{
+            getExistingIngredients()
+        }, [])
+    
     return (
         <section className="bg-orange-50 min-h-screen flex flex-col p-5 items-center justify-center">
             <h1 className="text-3xl mb-20 font-bold">Aggiungi una nuova ricetta</h1>
 
-            {/* image, title, description, recipeType, ingredients */}
+
 
             <form className="w-full max-w-lg" onSubmit={(e)=>{
                 e.preventDefault()
-                newRecipe()
+                saveNewRecipe()
             }}>
+                {/* title */}
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-title">
@@ -69,25 +106,26 @@ const NewRecipes = function () {
 
                     </div>
                 </div>
+
+                {/* ingredients */}
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-ingredients">
                             Ingredienti
                         </label>
-                        <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-ingredients" type="text" placeholder="Risotto" required value={inputValues.ingredients} onChange={(e)=>{
-                            setInputValues({
-                                ...inputValues,
-                                ingredients: e.target.value,
-                            })
-                        }} />
+                        
 
 
                         {/* <Select  closeMenuOnSelect={false} components={animatedComponents} isMulti options={options}></Select> */}
-                        <CreatableSelect isMulti options={options} />
+                        <CreatableSelect isMulti options={existingIngredients} value={selectedIngredients} onChange={(selected) => {
+                            setSelectedIngredients(selected || [])
+                        }} />
 
 
                     </div>
                 </div>
+
+                {/* description */}
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-description">
@@ -101,6 +139,8 @@ const NewRecipes = function () {
                         }}></textarea>
                     </div>
                 </div>
+
+                {/* type + foto */}
                 <div className="flex flex-row justify-center -mx-3 mb-2">
                     
                     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -114,10 +154,10 @@ const NewRecipes = function () {
                                 recipeType: e.target.value,
                             })
                         }}>
-                                <option>Primo</option>
-                                <option>Secondo</option>
-                                <option>Contorno</option>
-                                <option>Dolce</option>
+                                <option value={'PRIMO'}>Primo</option>
+                                <option value={'SECONDO'}>Secondo</option>
+                                <option value={'CONTORNO'}>Contorno</option>
+                                <option value={'DOLCE'}>Dolce</option>
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -136,6 +176,12 @@ const NewRecipes = function () {
                         }} />
                     </div>
                 </div>
+
+                {/* submit */}
+                <div className="flex flex-row justify-center -mx-3 mb-2 pt-3">
+                        <button type="submit" className="text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Salva ricetta</button>
+                </div>
+                
             </form>
 
 
