@@ -11,7 +11,9 @@ const NewRecipes = function () {
     const token = localStorage.getItem("token")
 
 
-    const [inputValues, setInputValues] = useState({})
+    const [inputValues, setInputValues] = useState({
+        recipeType: "",
+    })
 
 
     /* handling ingredients */
@@ -149,11 +151,14 @@ const NewRecipes = function () {
                         </label>
                         <div className="relative">
                             <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-type" required value={inputValues.recipeType} onChange={(e)=>{
-                            setInputValues({
-                                ...inputValues,
-                                recipeType: e.target.value,
-                            })
-                        }}>
+                                setInputValues({
+                                    ...inputValues,
+                                    recipeType: e.target.value,
+                                })                           
+                            }}>
+                                <option value="" disabled>
+                                    Tipo
+                                </option>
                                 <option value={'PRIMO'}>Primo</option>
                                 <option value={'SECONDO'}>Secondo</option>
                                 <option value={'CONTORNO'}>Contorno</option>
