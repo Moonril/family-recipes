@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable';
+import Swal from "sweetalert2";
 
 const NewRecipes = function () {
 
@@ -9,6 +10,8 @@ const NewRecipes = function () {
     const APIUrlGetIngredients = 'http://localhost:8080/ingredients'
     
     const token = localStorage.getItem("token")
+
+    
 
 
     const [inputValues, setInputValues] = useState({
@@ -70,10 +73,21 @@ const NewRecipes = function () {
         })
         .then((response) => {
             console.log("Recipe saved: ", response.data)
+            Swal.fire({
+                title: 'Ricetta salvata!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            })
             
         })
         .catch((err) => {
             console.log("Error during saving: ", err)
+            Swal.fire({
+                title: 'Errore nella richiesta',
+                text: 'Controlla che la ricetta non esista già.',
+                icon: 'error',
+                confirmButtonText: 'Riprova',
+            })
             
         })
     }

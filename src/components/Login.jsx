@@ -33,6 +33,12 @@ const Login = function () {
         })
         .catch((err) => {
             console.log("Errore nel login: ", err)
+            Swal.fire({
+                title: 'Errore nella richiesta',
+                text: 'Qualcosa è andato storto durante login.',
+                icon: 'error',
+                confirmButtonText: 'Riprova',
+            })
         })
     }
 

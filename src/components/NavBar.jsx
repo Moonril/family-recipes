@@ -1,12 +1,26 @@
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom"
 import { AuthContext } from "../auth/AuthContext";
+import Swal from "sweetalert2";
 
 const NavBar = function () {
 
     const location = useLocation()
     const { isAuthenticated, username, logout } = useContext(AuthContext)
 
+    
+    const logoutAlert = () => {
+        Swal.fire({
+            title: 'Logout effettuato con successo!',
+            icon: 'success',
+            confirmButtonText: 'OK',
+        })
+    }
+    
+    const handleLogout = () => {
+        logout()        
+        logoutAlert()   
+    }
 
 
     return (
@@ -26,7 +40,7 @@ const NavBar = function () {
 
                 {
                     isAuthenticated ? (
-                        <button onClick={logout} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Logout</button>
+                        <button onClick={handleLogout} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Logout</button>
                         
                     ) : ( 
                         <Link to={"/login"} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Login</Link> 
