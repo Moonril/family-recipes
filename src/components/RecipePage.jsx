@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import { Link, useLocation, useParams } from "react-router-dom"
+import { AuthContext } from "../auth/AuthContext"
+import { MdEdit } from "react-icons/md";
 
 const RecipePage = function () {
     
@@ -7,6 +9,9 @@ const RecipePage = function () {
     const [recipe, setRecipe] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
+
+    const location = useLocation()
+    const { isAuthenticated, username, logout } = useContext(AuthContext)
 
     
     
@@ -66,7 +71,11 @@ const RecipePage = function () {
                             <img src={`/${recipe.image}`} alt="stock-recipe" className="w-full h-[200px] md:h-[300px] xl:w-md xl:h-full object-cover" />
 
                             <div className="flex flex-col gap-3">
-                                <h1 className="text-3xl font-bold bg-[#82bd35ef]">{recipe.title}</h1>
+                                <h1 className="text-3xl font-bold bg-[#82bd35ef] flex flex-row gap-3">{recipe.title} {
+                                    isAuthenticated && location.pathname != '/recipes/new' && (
+                                        <Link to={'/recipes/new'} className="font-light text-2xl hover:underline cursor-pointer flex flex-row items-center">modifica ricetta<MdEdit /></Link>
+                                    )
+                                }</h1>
                                 <h4 className="text-2xl underline decoration-[#842B2F]">Ingredienti:</h4>
                                 <h4 className="text-xl xl:w-xl">{recipe.ingredients.join(', ')}.</h4>
                                 <p className="text-justify text-xl xl:w-xl mt-6">{recipe.description}</p>
