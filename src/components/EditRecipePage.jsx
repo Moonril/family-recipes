@@ -1,30 +1,29 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import Select from 'react-select'
+import { useParams } from "react-router-dom";
 import CreatableSelect from 'react-select/creatable';
 import Swal from "sweetalert2";
 
 const EditRecipePage = function () {
 
-    const APIUrlNewRecipe = 'http://localhost:8080/recipes/new'
+
+
+    const { id } = useParams()
+    //const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/${id}`
+    const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/105`
     const APIUrlGetIngredients = 'http://localhost:8080/ingredients'
+
+
     
     const token = localStorage.getItem("token")
-
-    
-
 
     const [inputValues, setInputValues] = useState({
         recipeType: "",
     })
-
-
-    /* handling ingredients */
-
     // state for ingredients
     const [existingIngredients, setExistingIngredients] = useState([]) 
-    const [selectedIngredients, setSelectedIngredients] = useState([])  // to send with the new recipe
-    // import already existing ingredients con fetch al load    
+    const [selectedIngredients, setSelectedIngredients] = useState([]) 
+    
 
     /* get ingredients from database */
 
@@ -37,7 +36,7 @@ const EditRecipePage = function () {
             }
         })
         .then((response) =>{
-            console.log(response.data.content, 'ingredients list')
+            //console.log(response.data.content, 'ingredients list')
             const formattedIngredients = response.data.content.map(ing => ({
                 value: ing.name,
                 label: ing.name
@@ -53,10 +52,28 @@ const EditRecipePage = function () {
         })
     }
 
+    // get recipe from url
+    const getRecipeToModify = () => {
+        axios
+        .get(APIUrlGetRecipeToEdit)
+        .then((response) => {
+            //console.log(response.data, 'recipe')
+            setInputValues(response.data)
+        })
+        .catch((error) => {
+            console.log("errore nel recupero ricetta", error)
+            
+        })
+    }
     
-    /* save recipe */
+
     
-    const saveNewRecipe = () => {
+    
+
+    
+    /* save modified recipe */
+    
+    const saveEditedRecipe = () => {
 
         const payload = {
             ...inputValues,
@@ -65,7 +82,7 @@ const EditRecipePage = function () {
 
 
         axios
-        .post(APIUrlNewRecipe, payload, {
+        .put(APIUrlGetRecipeToEdit, payload, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -74,7 +91,7 @@ const EditRecipePage = function () {
         .then((response) => {
             console.log("Recipe saved: ", response.data)
             Swal.fire({
-                title: 'Ricetta salvata!',
+                title: 'Ricetta modificata!',
                 icon: 'success',
                 confirmButtonText: 'OK',
             })
@@ -84,7 +101,7 @@ const EditRecipePage = function () {
             console.log("Error during saving: ", err)
             Swal.fire({
                 title: 'Errore nella richiesta',
-                text: 'Controlla che la ricetta non esista già.',
+                text: 'Qualcosa è andato storto.',
                 icon: 'error',
                 confirmButtonText: 'Riprova',
             })
@@ -92,47 +109,27 @@ const EditRecipePage = function () {
         })
     }
     
-
     useEffect(()=>{
-            fetch("/ricette.json")
-        .then((response)=>{
-            if(response.ok){
-                return response.json()
-            } else {
-                throw new Error('errrore nella fetch')
-            }
-        })
-        .then(data => {
+        getExistingIngredients()
+        getRecipeToModify()
+    }, [id])
 
-            setIsLoading(false)
-            const found = data.find(r => r.id === Number(id))
-            setRecipe(found)
 
-            // console.log('porcocaneee', data)
-            // console.log('porcocaneee2', found)
-            // console.log('porcocaneee3', id)
-        })
-        .catch((error) => {
-            console.log('errore', error)
-            setIsLoading(false)
-            setIsError(true)
-        })
-        }, [])
     
     return (
         <section className="bg-orange-50 min-h-screen flex flex-col p-5 items-center justify-center">
-            <h1 className="text-3xl mb-20 font-bold">Aggiungi una nuova ricetta</h1>
+            <h1 className="text-3xl mb-20 font-bold">Modifica</h1>
 
 
 
             <form className="w-full max-w-lg" onSubmit={(e)=>{
                 e.preventDefault()
-                saveNewRecipe()
+                saveEditedRecipe()
             }}>
                 {/* title */}
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-title">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-title">
                             Titolo
                         </label>
                         <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-title" type="text" placeholder="Risotto" required value={inputValues.title} onChange={(e)=>{
@@ -148,17 +145,12 @@ const EditRecipePage = function () {
                 {/* ingredients */}
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-ingredients">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-ingredients">
                             Ingredienti
                         </label>
-                        
-
-
-                        {/* <Select  closeMenuOnSelect={false} components={animatedComponents} isMulti options={options}></Select> */}
                         <CreatableSelect isMulti options={existingIngredients} value={selectedIngredients} onChange={(selected) => {
                             setSelectedIngredients(selected || [])
                         }} />
-
 
                     </div>
                 </div>
@@ -166,7 +158,7 @@ const EditRecipePage = function () {
                 {/* description */}
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-description">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-description">
                             Descrizione
                         </label>
                         <textarea name="" className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-description" placeholder="Tagliare.." required value={inputValues.description} onChange={(e)=>{
@@ -182,7 +174,7 @@ const EditRecipePage = function () {
                 <div className="flex flex-row justify-center -mx-3 mb-2">
                     
                     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-type">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-type">
                             Tipo
                         </label>
                         <div className="relative">
@@ -206,7 +198,7 @@ const EditRecipePage = function () {
                         </div>
                     </div>
                     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-imgUrl">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-imgUrl">
                             Foto url
                         </label>
                         <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-imgUrl" type="text" placeholder="risotto.jpg" required value={inputValues.image} onChange={(e)=>{

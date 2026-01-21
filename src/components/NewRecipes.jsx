@@ -1,6 +1,5 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable';
 import Swal from "sweetalert2";
 
@@ -24,7 +23,7 @@ const NewRecipes = function () {
     // state for ingredients
     const [existingIngredients, setExistingIngredients] = useState([]) 
     const [selectedIngredients, setSelectedIngredients] = useState([])  // to send with the new recipe
-    // import already existing ingredients con fetch al load    
+   
 
     /* get ingredients from database */
 
@@ -37,7 +36,7 @@ const NewRecipes = function () {
             }
         })
         .then((response) =>{
-            console.log(response.data.content, 'ingredients list')
+            //console.log(response.data.content, 'ingredients list')
             const formattedIngredients = response.data.content.map(ing => ({
                 value: ing.name,
                 label: ing.name
@@ -54,7 +53,7 @@ const NewRecipes = function () {
     }
 
     
-    /* save recipe */
+    /* save new recipe */
     
     const saveNewRecipe = () => {
 
@@ -72,7 +71,7 @@ const NewRecipes = function () {
             }
         })
         .then((response) => {
-            console.log("Recipe saved: ", response.data)
+           // console.log("Recipe saved: ", response.data)
             Swal.fire({
                 title: 'Ricetta salvata!',
                 icon: 'success',
@@ -81,7 +80,7 @@ const NewRecipes = function () {
             
         })
         .catch((err) => {
-            console.log("Error during saving: ", err)
+            //console.log("Error during saving: ", err)
             Swal.fire({
                 title: 'Errore nella richiesta',
                 text: 'Controlla che la ricetta non esista già.',
@@ -132,7 +131,7 @@ const NewRecipes = function () {
                         
 
 
-                        {/* <Select  closeMenuOnSelect={false} components={animatedComponents} isMulti options={options}></Select> */}
+                        
                         <CreatableSelect isMulti options={existingIngredients} value={selectedIngredients} onChange={(selected) => {
                             setSelectedIngredients(selected || [])
                         }} />
