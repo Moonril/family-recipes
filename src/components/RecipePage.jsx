@@ -10,8 +10,11 @@ const RecipePage = function () {
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
+
     const location = useLocation()
-    const { isAuthenticated, username, logout } = useContext(AuthContext)
+    const { isAuthenticated } = useContext(AuthContext)
+
+
 
     
     
@@ -31,9 +34,9 @@ const RecipePage = function () {
             const found = data.find(r => r.id === Number(id))
             setRecipe(found)
 
-            console.log('porcocaneee', data)
-            console.log('porcocaneee2', found)
-            console.log('porcocaneee3', id)
+            // console.log('porcocaneee', data)
+            // console.log('porcocaneee2', found)
+            // console.log('porcocaneee3', id)
         })
         .catch((error) => {
             console.log('errore', error)
@@ -73,7 +76,7 @@ const RecipePage = function () {
                             <div className="flex flex-col gap-3">
                                 <h1 className="text-3xl font-bold bg-[#82bd35ef] flex flex-row gap-3">{recipe.title} {
                                     isAuthenticated && location.pathname != '/recipes/new' && (
-                                        <Link to={'/recipes/new'} className="font-light text-2xl hover:underline cursor-pointer flex flex-row items-center">modifica ricetta<MdEdit /></Link>
+                                        <Link to={`/recipes/${id}/edit`} className="font-light text-2xl hover:underline cursor-pointer flex flex-row items-center">modifica ricetta<MdEdit /></Link>
                                     )
                                 }</h1>
                                 <h4 className="text-2xl underline decoration-[#842B2F]">Ingredienti:</h4>
