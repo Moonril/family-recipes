@@ -207,7 +207,7 @@ const EditRecipePage = function () {
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-ingredients">
                             Ingredienti
                         </label>
-                        <CreatableSelect isMulti options={existingIngredients} value={selectedIngredients} onChange={(selected) => {
+                        <CreatableSelect isMulti id="grid-ingredients" options={existingIngredients} value={selectedIngredients} onChange={(selected) => {
                             setSelectedIngredients(selected || [])
                         }} />
 
