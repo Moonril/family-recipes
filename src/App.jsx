@@ -7,6 +7,7 @@ import NavBar from './components/NavBar'
 import Login from './components/Login'
 import NewRecipes from './components/NewRecipes'
 import EditRecipePage from './components/EditRecipePage'
+import IngredientsPage from './components/IngredientsPage'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/recipes/:id/edit' element={<EditRecipePage />}  />
         <Route path='*' element={<NotFound />}  />
         <Route path='/login' element={<Login />}  />
+        <Route path='/ingredients' element={<IngredientsPage />}  />
         <Route path='/recipes/new' element={<NewRecipes />}  />
 
       </Routes>
