@@ -19,6 +19,9 @@ const EditRecipePage = function () {
 
     const [inputValues, setInputValues] = useState({
         recipeType: "",
+        title: "",
+        description: "",
+        image: "",
     })
     // state for ingredients
     const [existingIngredients, setExistingIngredients] = useState([]) 

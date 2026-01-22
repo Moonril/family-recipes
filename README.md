@@ -18,6 +18,6 @@ If you are developing a production application, we recommend using TypeScript wi
 ## TODO
 
 - resolve error in changing hook
-- Delete ricette
+- handle edit recipe when recipe not found
 - Modify/delete ingredienti
 - Aggiungi ricette vere in home page
