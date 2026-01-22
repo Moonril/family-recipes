@@ -10,7 +10,7 @@ const EditRecipePage = function () {
 
     const { id } = useParams()
     //const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/${id}`
-    const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/105`
+    const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/106`
     const APIUrlGetIngredients = 'http://localhost:8080/ingredients'
 
 
@@ -106,6 +106,62 @@ const EditRecipePage = function () {
                 confirmButtonText: 'Riprova',
             })
             
+        })
+    }
+
+    /* delete recipe */
+
+
+    const deleteRecipe = () => {
+
+        axios
+        .delete(APIUrlGetRecipeToEdit, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log("Recipe deleted: ", response.data)
+            Swal.fire({
+                title: 'Ricetta eliminata con successo!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            })
+            
+        })
+        .catch((err) => {
+            console.log("Error during deletion: ", err)
+            Swal.fire({
+                title: 'Errore nella richiesta',
+                text: 'Qualcosa è andato storto.',
+                icon: 'error',
+                confirmButtonText: 'Riprova',
+            })
+            
+        })
+    }
+
+    const handleDeleteRecipe = () => {
+        Swal.fire({
+            title: 'Vuoi veramente eliminare questa ricetta permanentemente?',
+            icon: 'warning',
+            showDenyButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Indietro' ,
+            confirmButtonText: 'Si',
+            denyButtonText: 'No',
+            customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2',
+                denyButton: 'order-3',
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteRecipe()
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
         })
     }
     
@@ -212,10 +268,12 @@ const EditRecipePage = function () {
 
                 {/* submit */}
                 <div className="flex flex-row justify-center -mx-3 mb-2 pt-3">
-                        <button type="submit" className="text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Salva ricetta</button>
+                        <button type="submit" className="text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 me-2">Salva ricetta</button>
+                        {/* delete */}
                 </div>
                 
             </form>
+                        <button onClick={handleDeleteRecipe} className="text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-red-600 hover:bg-red-700 focus:ring-red-800">Elimina Ricetta</button>
 
 
         </section>
