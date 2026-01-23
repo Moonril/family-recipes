@@ -107,7 +107,7 @@ const IngredientsPage = function () {
             <h1 className="text-3xl mb-20 font-bold">Gestione ingredienti</h1>
 
             {/* add save ingredient fetch here */}
-            <p className="bg-red-300 px-3 py-1 rounded-2xl cursor-pointer" >+</p>
+            
             <div className="flex flex-col md:flex-row md:flex-wrap items-center gap-5">
                 {/* LOADING */}
 
@@ -123,7 +123,8 @@ const IngredientsPage = function () {
                 {
                     isError && (
                         <p>
-                            Errore nella fetch
+                            Qualcosa è andato storto, 
+                            <button onClick={() => window.location.reload(false)}>Ricarica!</button>
                         </p>
                     )
                 }
@@ -132,6 +133,7 @@ const IngredientsPage = function () {
                         <p onClick={handleIngredient} className="bg-red-300 px-3 py-1 rounded-2xl cursor-pointer" key={ingredient.id}>{ingredient.name}</p>
                     ))
                 }
+                 <p className="bg-blue-300 px-3 py-1 rounded-2xl cursor-pointer" >+</p>
             </div>
         </section>
 
