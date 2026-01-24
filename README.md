@@ -1,5 +1,4 @@
 
 ## TODO
 
-- handle edit recipe when recipe not found
-- Aggiungi ricette vere in home page
+- risolvi problema lettura ingredient in recipePage + editRecipe. JsIgnore

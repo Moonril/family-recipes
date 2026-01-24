@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react"
 import RecipeCard from "./RecipeCard"
+import axios from "axios"
 
 const HomePage = function () {
+
+    
+    const APIUrlGetRecipes = 'http://localhost:8080/recipes'
 
     const [recipes, setRecipes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -31,6 +35,29 @@ const HomePage = function () {
         })
     }
 
+    /* get real recipes */
+
+    const getRealRecipes = () => {
+        axios
+        .get(APIUrlGetRecipes)
+        .then((response) =>{
+            console.log(response.data.content, 'recipe list')
+
+            
+            setRecipes(response.data.content)
+
+     
+            setIsLoading(false)
+                 
+        })
+        .catch((error) => {
+            console.log("errore nel recupero ricette", error)
+            setIsLoading(false)
+            setIsError(true)
+            
+        })
+    }
+
     const handleSearch = (e) => {
         e.preventDefault()
         if (search.trim() === "") {
@@ -55,6 +82,7 @@ const HomePage = function () {
 
     useEffect(()=>{
         getRecipes()
+        //getRealRecipes()
     }, [])
 
     return (

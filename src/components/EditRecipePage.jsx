@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from 'react-select/creatable';
 import Swal from "sweetalert2";
 
@@ -9,9 +9,11 @@ const EditRecipePage = function () {
 
 
     const { id } = useParams()
-    //const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/${id}`
-    const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/106`
+    const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/${id}`
+    //const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/106` //testing
     const APIUrlGetIngredients = 'http://localhost:8080/ingredients'
+
+    const navigate = useNavigate()
 
 
     
@@ -131,6 +133,9 @@ const EditRecipePage = function () {
                 confirmButtonText: 'OK',
             })
             
+        })
+        .then(() => {
+            navigate('/')
         })
         .catch((err) => {
             console.log("Error during deletion: ", err)

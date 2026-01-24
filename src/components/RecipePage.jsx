@@ -2,10 +2,12 @@ import { useContext, useEffect, useState } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 import { AuthContext } from "../auth/AuthContext"
 import { MdEdit } from "react-icons/md";
+import axios from "axios";
 
 const RecipePage = function () {
     
     const { id } = useParams()
+    const APIUrlGetRecipeToEdit = `http://localhost:8080/recipes/${id}`
     const [recipe, setRecipe] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
@@ -15,6 +17,23 @@ const RecipePage = function () {
     const { isAuthenticated } = useContext(AuthContext)
 
 
+
+
+    const getRecipeFromUrl = () => {
+        axios
+        .get(APIUrlGetRecipeToEdit)
+        .then((response) => {
+            console.log(response.data, 'recipe')
+           setRecipe(response.data)
+           setIsLoading(false)
+           
+        })
+        .catch((error) => {
+            console.log("errore nel recupero ricetta", error)
+            setIsLoading(false)
+            setIsError(true)
+        })
+    }
 
     
     
@@ -34,15 +53,13 @@ const RecipePage = function () {
             const found = data.find(r => r.id === Number(id))
             setRecipe(found)
 
-            // console.log('porcocaneee', data)
-            // console.log('porcocaneee2', found)
-            // console.log('porcocaneee3', id)
         })
         .catch((error) => {
             console.log('errore', error)
             setIsLoading(false)
             setIsError(true)
         })
+        //getRecipeFromUrl()
     }, [id])
 
     
@@ -80,7 +97,7 @@ const RecipePage = function () {
                                     )
                                 }</h1>
                                 <h4 className="text-2xl underline decoration-[#842B2F]">Ingredienti:</h4>
-                                <h4 className="text-xl xl:w-xl">{recipe.ingredients.join(', ')}.</h4>
+                                <h4 className="text-xl xl:w-xl">{recipe.ingredients.join(', ')}.</h4> {/* this must be changed for real recipes */}
                                 <p className="text-justify text-xl xl:w-xl mt-6">{recipe.description}</p>
                             </div>
                         </div>
