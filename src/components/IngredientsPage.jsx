@@ -24,9 +24,16 @@ const IngredientsPage = function () {
             }
         })
         .then((response) =>{
-            console.log(response.data.content, 'ingredients list')
+            //console.log(response.data.content, 'ingredients list')
 
-            setExistingIngredients(response.data.content)
+            const sorted = response.data.content
+                .slice() 
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(ing => ({
+                id: ing.id,
+                name: ing.name,
+            }))
+            setExistingIngredients(sorted)
             setIsLoading(false)
            
             
@@ -42,8 +49,136 @@ const IngredientsPage = function () {
 
     
     /* save new ingredient */
+
+    const saveNewIngredient = (ingredientName) => {
+
+        const payload = {
+            name: ingredientName
+        }
+
+
+        axios
+        .post(APIUrlGetIngredients, payload, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        })
+        .then((response) => {
+            console.log("Ingredient saved: ", response.data)
+            Swal.fire({
+                title: 'Ingrediente salvato!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            })
+            
+        })
+        .then(() => {
+            getExistingIngredients()
+        })
+        .catch((err) => {
+            console.log("Error during saving: ", err)
+            Swal.fire({
+                title: 'Errore nella richiesta',
+                text: `Controlla che l'ingrediente non esista già.`,
+                icon: 'error',
+                confirmButtonText: 'Riprova',
+            })
+            
+        })
+    }
+
+    /* handle */
+
+    const handleNewIngredient = () => {
+        Swal.fire({
+            title: 'Aggiungi un nuovo ingrediente',
+            icon: 'info',
+            input: "text",
+            showCancelButton: true,
+            cancelButtonText: 'Indietro' ,
+            confirmButtonText: 'Salva',
+            inputValidator: (value) => {
+                if (!value) {
+                    return "Devi inserire un nome"
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                saveNewIngredient(result.value)
+            }
+        })
+    }
+
+
     /* modify existing ingredient */
+
+    const saveEditedIngredient = () => {
+
+        const payload = {
+            ...inputValues,
+            ingredients: selectedIngredients.map(ing => ing.value) //add correct payload
+        }
+
+
+        axios
+        .put(APIUrlGetIngredients, payload, {  // add id ingredient
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        })
+        .then((response) => {
+            console.log("Ingredient saved: ", response.data)
+            Swal.fire({
+                title: 'Ingrediente modificato!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            })
+            
+        })
+        .catch((err) => {
+            console.log("Error during saving: ", err)
+            Swal.fire({
+                title: 'Errore nella richiesta',
+                text: 'Qualcosa è andato storto.',
+                icon: 'error',
+                confirmButtonText: 'Riprova',
+            })
+            
+        })
+    }
+
     /* delete existing ingredient */
+
+    const deleteIngredient = () => {
+
+        axios
+        .delete(APIUrlGetIngredients, {  // add id ingredient
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log("Ingredient deleted: ", response.data)
+            Swal.fire({
+                title: 'Ingredient eliminato con successo!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            })
+            
+        })
+        .catch((err) => {
+            console.log("Error during deletion: ", err)
+            Swal.fire({
+                title: 'Errore nella richiesta',
+                text: 'Qualcosa è andato storto.',
+                icon: 'error',
+                confirmButtonText: 'Riprova',
+            })
+            
+        })
+    }
 
 
     /* handling click on ingredient */
@@ -52,14 +187,14 @@ const IngredientsPage = function () {
     // input + tasto modifica
     // sotto input tasto delete
 
-    const handleIngredient = () => {
+    const handleExistingIngredient = () => {
         Swal.fire({
             title: 'Modifica',
             icon: 'info',
             input: "text", // aggiungere l'ingrediente come value
             showDenyButton: true,
             showCancelButton: true,
-            cancelButtonText: 'Indietro' ,
+            cancelButtonText: 'Indietro',
             confirmButtonText: 'Modifica',
             denyButtonText: 'Elimina',
             customClass: {
@@ -70,7 +205,8 @@ const IngredientsPage = function () {
             },
         }).then((result) => {
                     if (result.isConfirmed) {
-                        // putfetch here
+                        // putfetch modify here
+                        saveEditedIngredient()
                     } else if (result.isDenied) {
                         // posso concatenare un altro swal + deletefetch?
                         Swal.fire({
@@ -89,7 +225,7 @@ const IngredientsPage = function () {
                             },
                         }).then((result) => {
                                     if (result.isConfirmed) {
-                                        deleteIngredient() //deletefetcg here
+                                        deleteIngredient() 
                                     } else if (result.isDenied) {
                                         Swal.fire('Changes are not saved', '', 'info')
                                     }
@@ -98,6 +234,8 @@ const IngredientsPage = function () {
                 })
     }
 
+
+
     useEffect(()=>{
                 getExistingIngredients()
             }, [])
@@ -105,8 +243,6 @@ const IngredientsPage = function () {
     return (
         <section className="bg-orange-50 min-h-screen flex flex-col p-5 items-center justify-center">
             <h1 className="text-3xl mb-20 font-bold">Gestione ingredienti</h1>
-
-            {/* add save ingredient fetch here */}
             
             <div className="flex flex-col md:flex-row md:flex-wrap items-center gap-5">
                 {/* LOADING */}
@@ -124,16 +260,16 @@ const IngredientsPage = function () {
                     isError && (
                         <p>
                             Qualcosa è andato storto, 
-                            <button onClick={() => window.location.reload(false)}>Ricarica!</button>
+                            <button className="cursor-pointer underline hover:text-blue-500 ms-2" onClick={() => window.location.reload(false)}>Ricarica!</button>
                         </p>
                     )
                 }
                 {
                     !isLoading && !isError && existingIngredients.map((ingredient) => (
-                        <p onClick={handleIngredient} className="bg-red-300 px-3 py-1 rounded-2xl cursor-pointer" key={ingredient.id}>{ingredient.name}</p>
+                        <p onClick={handleExistingIngredient} className="bg-red-300 px-3 py-1 rounded-2xl cursor-pointer" key={ingredient.id}>{ingredient.name}</p>  //todo order alphabetically
                     ))
                 }
-                 <p className="bg-blue-300 px-3 py-1 rounded-2xl cursor-pointer" >+</p>
+                 <p onClick={handleNewIngredient} className="bg-blue-300 px-3 py-1 rounded-2xl cursor-pointer" >+</p>
             </div>
         </section>
 
