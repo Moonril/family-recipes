@@ -34,10 +34,9 @@ const IngredientsPage = function () {
                 name: ing.name,
             }))
             setExistingIngredients(sorted)
+     
             setIsLoading(false)
-           
-            
-            
+                 
         })
         .catch((error) => {
             console.log("errore nel recupero ingredienti", error)
@@ -55,7 +54,6 @@ const IngredientsPage = function () {
         const payload = {
             name: ingredientName
         }
-
 
         axios
         .post(APIUrlGetIngredients, payload, {
@@ -88,7 +86,7 @@ const IngredientsPage = function () {
         })
     }
 
-    /* handle */
+    /* handle new button */
 
     const handleNewIngredient = () => {
         Swal.fire({
@@ -113,11 +111,11 @@ const IngredientsPage = function () {
 
     /* modify existing ingredient */
 
-    const saveEditedIngredient = () => {
+    const saveEditedIngredient = (ingredient) => {
 
         const payload = {
-            ...inputValues,
-            ingredients: selectedIngredients.map(ing => ing.value) //add correct payload
+            id: ingredient.id, //add correct payload
+            name: ingredient.name //add correct payload
         }
 
 
@@ -137,6 +135,9 @@ const IngredientsPage = function () {
             })
             
         })
+        .then(() => {
+            getExistingIngredients()
+        })
         .catch((err) => {
             console.log("Error during saving: ", err)
             Swal.fire({
@@ -151,22 +152,25 @@ const IngredientsPage = function () {
 
     /* delete existing ingredient */
 
-    const deleteIngredient = () => {
+    const deleteIngredient = (ingredientId) => {
 
         axios
-        .delete(APIUrlGetIngredients, {  // add id ingredient
+        .delete(`${APIUrlGetIngredients}/${ingredientId}`, {  // add id ingredient
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
         .then((response) => {
-            console.log("Ingredient deleted: ", response.data)
+            console.log("Ingredient deleted: ", ingredientId)
             Swal.fire({
                 title: 'Ingredient eliminato con successo!',
                 icon: 'success',
                 confirmButtonText: 'OK',
             })
             
+        })
+        .then(() => {
+            getExistingIngredients()
         })
         .catch((err) => {
             console.log("Error during deletion: ", err)
@@ -183,30 +187,35 @@ const IngredientsPage = function () {
 
     /* handling click on ingredient */
 
-    // click -> swal text
-    // input + tasto modifica
-    // sotto input tasto delete
 
-    const handleExistingIngredient = () => {
+    const handleExistingIngredient = (ingredient) => {
         Swal.fire({
             title: 'Modifica',
             icon: 'info',
             input: "text", // aggiungere l'ingrediente come value
+            inputValue: ingredient.name,
             showDenyButton: true,
             showCancelButton: true,
             cancelButtonText: 'Indietro',
             confirmButtonText: 'Modifica',
-            denyButtonText: 'Elimina',
+            denyButtonText: 'Elimina',          
             customClass: {
                 actions: 'my-actions',
                 cancelButton: 'order-1 right-gap',
                 confirmButton: 'order-2',
                 denyButton: 'order-3',
             },
+            inputValidator: (value) => {
+                if (!value) {
+                    return "Devi inserire un nome"
+                }
+            },
         }).then((result) => {
                     if (result.isConfirmed) {
                         // putfetch modify here
-                        saveEditedIngredient()
+                        //saveEditedIngredient()
+                        console.log(result.value, 'updated ingredient');
+                        
                     } else if (result.isDenied) {
                         // posso concatenare un altro swal + deletefetch?
                         Swal.fire({
@@ -225,7 +234,9 @@ const IngredientsPage = function () {
                             },
                         }).then((result) => {
                                     if (result.isConfirmed) {
-                                        deleteIngredient() 
+                                        console.log(ingredient.id, 'ingredient id');
+                                        
+                                        deleteIngredient(ingredient.id) 
                                     } else if (result.isDenied) {
                                         Swal.fire('Changes are not saved', '', 'info')
                                     }
@@ -266,7 +277,7 @@ const IngredientsPage = function () {
                 }
                 {
                     !isLoading && !isError && existingIngredients.map((ingredient) => (
-                        <p onClick={handleExistingIngredient} className="bg-red-300 px-3 py-1 rounded-2xl cursor-pointer" key={ingredient.id}>{ingredient.name}</p>  //todo order alphabetically
+                        <p onClick={() => handleExistingIngredient(ingredient)} className="bg-red-300 px-3 py-1 rounded-2xl cursor-pointer" key={ingredient.id}>{ingredient.name}</p>  //todo order alphabetically
                     ))
                 }
                  <p onClick={handleNewIngredient} className="bg-blue-300 px-3 py-1 rounded-2xl cursor-pointer" >+</p>
