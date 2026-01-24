@@ -35,7 +35,7 @@ const NavBar = function () {
                 {
                     isAuthenticated && location.pathname != '/recipes/new' && (
                         <div>
-                            <Link to={'/recipes/new'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer me-2">Nuova ricetta?</Link>
+                            <Link to={'/recipes/new'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer me-2">Nuova ricetta</Link>
                             <Link to={'/ingredients'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Ingredienti</Link>
                         </div>
                     )

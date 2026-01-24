@@ -111,16 +111,16 @@ const IngredientsPage = function () {
 
     /* modify existing ingredient */
 
-    const saveEditedIngredient = (ingredient) => {
+    const saveEditedIngredient = (ingredientId, ingredientEdited) => {
 
         const payload = {
-            id: ingredient.id, //add correct payload
-            name: ingredient.name //add correct payload
+            id: ingredientId, 
+            name: ingredientEdited 
         }
 
 
         axios
-        .put(APIUrlGetIngredients, payload, {  // add id ingredient
+        .put(`${APIUrlGetIngredients}/${ingredientId}`, payload, { 
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -155,13 +155,13 @@ const IngredientsPage = function () {
     const deleteIngredient = (ingredientId) => {
 
         axios
-        .delete(`${APIUrlGetIngredients}/${ingredientId}`, {  // add id ingredient
+        .delete(`${APIUrlGetIngredients}/${ingredientId}`, { 
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
         .then((response) => {
-            console.log("Ingredient deleted: ", ingredientId)
+            //console.log("Ingredient deleted: ", ingredientId)
             Swal.fire({
                 title: 'Ingredient eliminato con successo!',
                 icon: 'success',
@@ -192,7 +192,7 @@ const IngredientsPage = function () {
         Swal.fire({
             title: 'Modifica',
             icon: 'info',
-            input: "text", // aggiungere l'ingrediente come value
+            input: "text",
             inputValue: ingredient.name,
             showDenyButton: true,
             showCancelButton: true,
@@ -212,12 +212,14 @@ const IngredientsPage = function () {
             },
         }).then((result) => {
                     if (result.isConfirmed) {
-                        // putfetch modify here
-                        //saveEditedIngredient()
+                        
+                        //saveEditedIngredient(result.value)
+                        saveEditedIngredient(ingredient.id, result.value)
                         console.log(result.value, 'updated ingredient');
+                        console.log(ingredient, 'updated ingredient dddddddddddddd');
                         
                     } else if (result.isDenied) {
-                        // posso concatenare un altro swal + deletefetch?
+                        
                         Swal.fire({
                             title: 'Vuoi veramente eliminare questo ingrediente permanentemente?',
                             icon: 'warning',
@@ -233,14 +235,14 @@ const IngredientsPage = function () {
                                 denyButton: 'order-3',
                             },
                         }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        console.log(ingredient.id, 'ingredient id');
-                                        
-                                        deleteIngredient(ingredient.id) 
-                                    } else if (result.isDenied) {
-                                        Swal.fire('Changes are not saved', '', 'info')
-                                    }
-                                })
+                                if (result.isConfirmed) {
+                                    console.log(ingredient.id, 'ingredient id');
+                                    
+                                    deleteIngredient(ingredient.id) 
+                                } else if (result.isDenied) {
+                                    Swal.fire('Cambiamenti non salvati', '', 'info')
+                                }
+                            })
                     }
                 })
     }

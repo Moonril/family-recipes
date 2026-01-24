@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import RecipeCard from "./RecipeCard"
-import NavBar from "./NavBar"
 
 const HomePage = function () {
 
