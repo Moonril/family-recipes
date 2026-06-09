@@ -86,23 +86,23 @@ const HomePage = function () {
     }, [])
 
     return (
-        <section className="bg-[#EDEEE9] bg-orange-50 min-h-screen flex flex-col p-5 items-center justify-center">
+        <section className="min-h-screen flex flex-col p-5 items-center justify-center">
             
             
             {/* search */}
-            <form className="my-10 flex gap-4 text-md xs:text-lg md:text-2xl" onSubmit={handleSearch}>
+            <form className="my-10 flex gap-4 text-md xs:text-lg" onSubmit={handleSearch}>
                 <input type="text" className="bg-white rounded-md p-2 placeholder-gray-500" placeholder={`cerca..`} value={search} onChange={(e) => {
                     setSearch(e.target.value)
                 }} />
-                <button className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer" type="submit">Cerca</button>
-                <button className="bg-[#ECD0C2] rounded-4xl py-1 px-4 hover:bg-[#d34e3c] cursor-pointer" onClick={()=>getRecipes()}>X</button>
+                <button className="bg-[#ffe1d1] rounded-md py-1 px-4 hover:bg-[#fcd9c6] cursor-pointer" type="submit">Cerca</button>
+                <button className="bg-[#ffe1d1] rounded-4xl py-1 px-4 hover:bg-[#d34e3c] cursor-pointer" onClick={()=>getRecipes()}>X</button>
             </form>
             {/* tags */}
             <div className="flex flex-wrap items-center gap-5 mb-10">
-                <button className=" bg-[#82bd35ef] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('primo')}>Primi</button>
-                <button className=" bg-[#82bd35ef] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('secondo')}>Secondi</button>
-                <button className=" bg-[#82bd35ef] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('contorno')}>Contorni</button>
-                <button className=" bg-[#82bd35ef] rounded-xl py-1 px-3 cursor-pointer" onClick={()=>filterByType('dolce')}>Dolci</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('primo')}>Primi</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('secondo')}>Secondi</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('contorno')}>Contorni</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('dolce')}>Dolci</button>
             </div>
             {/* cards */}
             

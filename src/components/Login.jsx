@@ -44,9 +44,9 @@ const Login = function () {
 
 
     return (
-        <section className="bg-[#EDEEE9] min-h-screen flex flex-col p-5 items-center justify-center">
+        <section className="min-h-screen flex flex-col p-5 items-center justify-center">
 
-            <div className="w-full bg-orange-50 rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 border-gray-300">
+            <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 border-gray-300">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8 ">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                             Effettua il login
