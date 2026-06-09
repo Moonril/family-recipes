@@ -106,7 +106,7 @@ const HomePage = function () {
             </div>
             {/* cards */}
             
-            <div className="flex flex-col md:flex-row md:flex-wrap items-center gap-5">
+            <div className="flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-5">
                 {/* LOADING */}
 
                 {
