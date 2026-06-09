@@ -28,29 +28,29 @@ const NavBar = function () {
 
 
     return (
-        <section className="bg-[#EDEEE9] bg-orange-50 flex flex-row justify-between items-center p-4">
+        <section className="bg-[#ffe1d1] border border-b-green-100 flex flex-row justify-between items-center p-4">
 
             {/* <div> */}
                 <Link to={'/'} className={location.pathname === '/' ? ' font-bold text-xl underline' : ' font-bold text-xl'}>Home</Link>
                 {
                     isAuthenticated && location.pathname != '/recipes/new' && (
                         <div>
-                            <Link to={'/recipes/new'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer me-2">Nuova ricetta</Link>
-                            <Link to={'/ingredients'} className="bg-[#ecc2c2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Ingredienti</Link>
+                            <Link to={'/recipes/new'} className="bg-[#ffe1d1] rounded-2xl py-1 px-4 hover:bg-[#fcd9c6] cursor-pointer me-2">Nuova ricetta</Link>
+                            <Link to={'/ingredients'} className="bg-[#ffe1d1] rounded-2xl py-1 px-4 hover:bg-[#fcd9c6] cursor-pointer">Ingredienti</Link>
                         </div>
                     )
                 }
             {/* </div> */}
             <div className="flex flex-row justify-end items-center gap-2" style={{textTransform: 'capitalize'}}>
-                <p>Ciao, {isAuthenticated ? username : 'ciccio'}</p>
+                { isAuthenticated ?? <p>Ciao, {isAuthenticated ? username : 'ciccio'}</p>}
 
 
                 {
                     isAuthenticated ? (
-                        <button onClick={handleLogout} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Logout</button>
+                        <button onClick={handleLogout} className="bg-[#ffe1d1] rounded-2xl py-1 px-4 hover:bg-[#fcd9c6] cursor-pointer">Logout</button>
                         
                     ) : ( 
-                        <Link to={"/login"} className="bg-[#ECD0C2] rounded-2xl py-1 px-4 hover:bg-[#e0ac92] cursor-pointer">Login</Link> 
+                        <Link to={"/login"} className="bg-[#ffe1d1] rounded-2xl py-1 px-4 hover:bg-[#fcd9c6] cursor-pointer">Login</Link> 
                     )
                 }
 
