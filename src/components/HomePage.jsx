@@ -95,14 +95,14 @@ const HomePage = function () {
                     setSearch(e.target.value)
                 }} />
                 <button className="bg-[#ffe1d1] rounded-md py-1 px-4 hover:bg-[#fcd9c6] cursor-pointer" type="submit">Cerca</button>
-                <button className="bg-[#ffe1d1] rounded-4xl py-1 px-4 hover:bg-[#d34e3c] cursor-pointer" onClick={()=>getRecipes()}>X</button>
+                <button className="bg-[#ffe1d1] rounded-4xl py-1 px-4 hover:bg-[#fc5d57] cursor-pointer" onClick={()=>getRecipes()}>X</button>
             </form>
             {/* tags */}
             <div className="flex flex-wrap items-center gap-5 mb-10">
-                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('primo')}>Primi</button>
-                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('secondo')}>Secondi</button>
-                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('contorno')}>Contorni</button>
-                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 cursor-pointer" onClick={()=>filterByType('dolce')}>Dolci</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 hover:bg-[#ffa8cb] cursor-pointer" onClick={()=>filterByType('primo')}>Primi</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 hover:bg-[#ffa8cb] cursor-pointer" onClick={()=>filterByType('secondo')}>Secondi</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 hover:bg-[#ffa8cb] cursor-pointer" onClick={()=>filterByType('contorno')}>Contorni</button>
+                <button className=" bg-[#ffbbd6] rounded-sm py-1 px-3 hover:bg-[#ffa8cb] cursor-pointer" onClick={()=>filterByType('dolce')}>Dolci</button>
             </div>
             {/* cards */}
             

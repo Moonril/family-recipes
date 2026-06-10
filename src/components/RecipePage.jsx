@@ -66,7 +66,7 @@ const RecipePage = function () {
     
 
     return (
-        <section className="bg-[#EDEEE9] bg-orange-50 min-h-screen flex flex-col md:flex-row p-5 md:p-10 lg:p-20 gap-5">
+        <section className="min-h-screen flex flex-col md:flex-row p-5 md:p-10 lg:p-20 gap-5">
             <Link to={'/'} className="text-2xl text-gray-900">&larr; <span className="hover:text-red-500 hover:underline">Indietro</span></Link>
             {
                     isLoading === true && (
@@ -91,7 +91,7 @@ const RecipePage = function () {
                             <img src={`/${recipe.image}`} alt="stock-recipe" className="w-full h-[200px] md:h-[300px] xl:w-md xl:h-full object-cover" />
 
                             <div className="flex flex-col gap-3">
-                                <h1 className="text-3xl font-bold bg-[#82bd35ef] flex flex-row gap-3">{recipe.title} {
+                                <h1 className="text-3xl font-bold bg-[#ffbbd6] flex flex-row gap-3">{recipe.title} {
                                     isAuthenticated && location.pathname != '/recipes/new' && (
                                         <Link to={`/recipes/${id}/edit`} className="font-light text-2xl hover:underline cursor-pointer flex flex-row items-center">modifica ricetta<MdEdit /></Link>
                                     )
