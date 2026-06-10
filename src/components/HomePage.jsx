@@ -90,7 +90,7 @@ const HomePage = function () {
             
             
             {/* search */}
-            <form className="my-10 flex gap-4 text-md xs:text-lg" onSubmit={handleSearch}>
+            <form className="my-10 flex flex-wrap gap-1 sm:gap-4 text-md xs:text-lg" onSubmit={handleSearch}>
                 <input type="text" className="bg-white rounded-md p-2 placeholder-gray-500" placeholder={`cerca..`} value={search} onChange={(e) => {
                     setSearch(e.target.value)
                 }} />

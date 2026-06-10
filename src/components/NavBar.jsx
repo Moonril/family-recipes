@@ -28,7 +28,7 @@ const NavBar = function () {
 
 
     return (
-        <section className="bg-[#ffe1d1] border border-b-green-100 flex flex-row justify-between items-center p-4">
+        <section className="bg-[#ffe1d1] flex flex-row justify-between items-center p-4">
 
             {/* <div> */}
                 <Link to={'/'} className={location.pathname === '/' ? ' font-bold text-xl underline' : ' font-bold text-xl'}>Home</Link>
