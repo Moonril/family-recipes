@@ -2,6 +2,7 @@ import axios from "axios"
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth/AuthContext"
+import Swal from "sweetalert2"
 
 const Login = function () {
 
@@ -35,7 +36,7 @@ const Login = function () {
             console.log("Errore nel login: ", err)
             Swal.fire({
                 title: 'Errore nella richiesta',
-                text: 'Qualcosa è andato storto durante login.',
+                text: 'Qualcosa è andato storto durante login. (contact me for a backend demo :) )',
                 icon: 'error',
                 confirmButtonText: 'Riprova',
             })
