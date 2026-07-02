@@ -277,10 +277,10 @@ const EditRecipePage = function () {
                 {/* submit */}
                 <div className="flex flex-row justify-center -mx-3 mb-2 pt-3">
                         <button type="submit" className="text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 me-2">Salva ricetta</button>
-                        {/* delete */}
                 </div>
                 
             </form>
+                        {/* delete */}
                         <button onClick={handleDeleteRecipe} className="text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-red-600 hover:bg-red-700 focus:ring-red-800">Elimina Ricetta</button>
 
 
